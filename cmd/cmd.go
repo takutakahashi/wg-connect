@@ -31,7 +31,7 @@ func doClient(c *cli.Context) {
 }
 
 func doServer(c *cli.Context) {
-	server.Open()
+	server.Listen()
 
 }
 
