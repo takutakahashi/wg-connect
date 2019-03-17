@@ -6,7 +6,9 @@ import (
 )
 
 func Listen() {
-	conn, err := net.ListenPacket("udp", "localhost:9876")
+  addr := "localhost:9876"
+  fmt.Println(addr)
+	conn, err := net.ListenPacket("udp", addr)
 	if err != nil {
 		panic(err)
 	}
