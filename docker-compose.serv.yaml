@@ -1,0 +1,8 @@
+version: '3'
+services:
+  server:
+    build: .
+networks:
+  server:
+    external: true
+

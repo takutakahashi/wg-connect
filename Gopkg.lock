@@ -2,6 +2,58 @@
 
 
 [[projects]]
+  digest = "1:4e39fc989983561696593007bf93783328db5b97334e2347474bebcaee1d0fc2"
+  name = "github.com/pions/dtls"
+  packages = [
+    "pkg/dtls",
+    "pkg/dtls/internal/udp",
+  ]
+  pruneopts = "UT"
+  revision = "26f587e06ed18c66b388cf537b80f6f8e3c4365f"
+  version = "v1.0.2"
+
+[[projects]]
+  branch = "master"
+  digest = "1:940b5484cd8b148a6e228e4334bf2f34d85d4659c2b61a2c26361aa6021a5a25"
+  name = "github.com/pions/pkg"
+  packages = ["stun"]
+  pruneopts = "UT"
+  revision = "f0a98342fda84db0c7c1dd65ac227945763b3d0c"
+
+[[projects]]
+  digest = "1:713e09f2cdfd943d7f496aded83ad291ca5c79fe9e61bf14c7096e6b8324a6a2"
+  name = "github.com/pions/webrtc"
+  packages = [
+    ".",
+    "examples/util",
+    "internal/datachannel",
+    "internal/mux",
+    "internal/network",
+    "internal/sctp",
+    "internal/sdp",
+    "internal/srtp",
+    "internal/util",
+    "pkg/datachannel",
+    "pkg/ice",
+    "pkg/media",
+    "pkg/rtcerr",
+    "pkg/rtcp",
+    "pkg/rtp",
+    "pkg/rtp/codecs",
+  ]
+  pruneopts = "UT"
+  revision = "7d19be0bca79fa3660a90a846f9d5ec3a53e12b7"
+  version = "v1.2.0"
+
+[[projects]]
+  digest = "1:cf31692c14422fa27c83a05292eb5cbe0fb2775972e8f1f8446a71549bd8980b"
+  name = "github.com/pkg/errors"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "ba968bfe8b2f7e042a574c888954fccecfa385b4"
+  version = "v0.8.1"
+
+[[projects]]
   digest = "1:b24d38b282bacf9791408a080f606370efa3d364e4b5fd9ba0f7b87786d3b679"
   name = "github.com/urfave/cli"
   packages = ["."]
@@ -9,9 +61,36 @@
   revision = "cfb38830724cc34fedffe9a2a29fb54fa9169cd1"
   version = "v1.20.0"
 
+[[projects]]
+  branch = "master"
+  digest = "1:49c0accb0c0098733a4033474f7df0b9db8c688a977840ccae378632237a315e"
+  name = "golang.org/x/crypto"
+  packages = ["curve25519"]
+  pruneopts = "UT"
+  revision = "b7391e95e576cacdcdd422573063bc057239113d"
+
+[[projects]]
+  branch = "master"
+  digest = "1:cd54f1899e8e8769b9bc7c4922fc44c8c62a54cf63753b228b9c59d42e7ea0e5"
+  name = "golang.org/x/net"
+  packages = [
+    "bpf",
+    "internal/iana",
+    "internal/socket",
+    "ipv4",
+  ]
+  pruneopts = "UT"
+  revision = "addf6b3196f61cd44ce5a76657913698c73479d0"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  input-imports = ["github.com/urfave/cli"]
+  input-imports = [
+    "github.com/pions/webrtc",
+    "github.com/pions/webrtc/examples/util",
+    "github.com/pions/webrtc/pkg/datachannel",
+    "github.com/pions/webrtc/pkg/ice",
+    "github.com/urfave/cli",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1
