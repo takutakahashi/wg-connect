@@ -1,18 +1,13 @@
-build: deps build_darwin
+OS := $(shell uname -s |tr '[A-Z]' '[a-z]')
+
+build: deps
+	GOOS=$(OS) GOARCH=amd64 go build -o dist/wg-$(OS) cmd/cmd.go
 
 server:
-	dist/wg-darwin server
+	dist/wg-$(OS) server
 
 client:
-	dist/wg-darwin client
-
-build_all: deps build_darwin build_linux
-
-build_linux:
-	GOOS=linux GOARCH=amd64 go build -o dist/wg-linux cmd/cmd.go
-
-build_darwin:
-	GOOS=darwin GOARCH=amd64 go build -o dist/wg-darwin cmd/cmd.go
+	dist/wg-$(OS) client
 
 deps:
 	dep ensure
