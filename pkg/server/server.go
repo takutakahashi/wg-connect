@@ -74,6 +74,8 @@ func Listen() {
 	// Wait for the remote SessionDescription
 	offer := <-offerChan
 
+  fmt.Println("------offer---------")
+  fmt.Println(offer)
 	err = peerConnection.SetRemoteDescription(offer)
 	util.Check(err)
 
@@ -100,7 +102,8 @@ func mustSignalViaHTTP(address string) (offerOut chan webrtc.RTCSessionDescripti
 
 		offerOut <- offer
 		answer := <-answerIn
-
+    fmt.Println("------answer---------")
+    fmt.Println(answer)
 		err = json.NewEncoder(w).Encode(answer)
 		util.Check(err)
 
