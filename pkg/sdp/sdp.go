@@ -1,4 +1,4 @@
-package server
+package sdp
 
 import (
 	"encoding/json"
@@ -13,7 +13,7 @@ import (
 	"github.com/pions/webrtc/pkg/ice"
 )
 
-func Start() {
+func StartServer() {
 	addr := flag.String("address", ":50000", "Address to host the HTTP server on.")
 	flag.Parse()
 

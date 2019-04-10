@@ -1,13 +1,16 @@
 OS := $(shell uname -s |tr '[A-Z]' '[a-z]')
 
 build: deps
-	GOOS=$(OS) GOARCH=amd64 go build -o dist/wg-$(OS) cmd/cmd.go
+	GOOS=$(OS) GOARCH=amd64 go build -o dist/$(OS) cmd/cmd.go
 
 server:
-	dist/wg-$(OS) server
+	dist/$(OS) server
 
 client:
-	dist/wg-$(OS) client
+	dist/$(OS) client
+
+sdp:
+	dist/$(OS) sdp
 
 deps:
 	dep ensure

@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/takutakahashi/wg-connect/pkg/client"
+	"github.com/takutakahashi/wg-connect/pkg/sdp"
 	"github.com/takutakahashi/wg-connect/pkg/server"
 	"github.com/urfave/cli"
 	"os"
@@ -10,6 +11,7 @@ import (
 var Commands = []cli.Command{
 	commandClient,
 	commandServer,
+	commandSDP,
 }
 
 var commandClient = cli.Command{
@@ -26,12 +28,24 @@ var commandServer = cli.Command{
 	Action:      doServer,
 }
 
+var commandSDP = cli.Command{
+	Name:        "sdp",
+	Usage:       "usage",
+	Description: "desc",
+	Action:      doSDP,
+}
+
 func doClient(c *cli.Context) {
 	client.ConnectServer()
 }
 
 func doServer(c *cli.Context) {
-	server.Listen()
+	server.Start()
+
+}
+
+func doSDP(c *cli.Context) {
+	sdp.StartServer()
 
 }
 
