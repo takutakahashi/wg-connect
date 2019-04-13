@@ -1,6 +1,22 @@
 syntax = "proto3";
 
-message SDPExchange {
+service Exchange {
+  rpc GetPeer (PeerMessage) returns (PeerResponse) {}
+  rpc GetAnswer (Offer) returns (Answer) {}
+}
+
+message PeerMessage {
   string token = 1;
-  string sdp_body = 2;
+}
+
+message PeerResponse {
+  string body_json = 2;
+}
+
+message Offer {
+  string sdp_body = 3;
+}
+
+message Answer {
+  string sdp_body = 4;
 }
