@@ -14,5 +14,5 @@ sdp:
 
 deps:
 	dep ensure
-	protoc --proto_path=pkg/proto/src --go_out=pkg/proto/dist pkg/proto/src/sdp_exchange.proto
+	protoc --proto_path=pkg/proto/sdp_exchange --go_out=pkg/proto/sdp_exchange pkg/proto/sdp_exchange/sdp_exchange.proto
 	mkdir -p dist
