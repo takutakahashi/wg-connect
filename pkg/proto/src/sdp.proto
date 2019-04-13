@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+message SDPExchange {
+  string token = 1;
+  string sdp_body = 2;
+}
