@@ -4,8 +4,12 @@
 package sdp_exchange
 
 import (
+	context "context"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
+	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 	math "math"
 )
 
@@ -201,4 +205,120 @@ var fileDescriptor_c88d59dbcf37a6c3 = []byte{
 	0xdc, 0x89, 0x2b, 0x48, 0x6b, 0x74, 0xeb, 0xf5, 0x48, 0x05, 0x95, 0x22, 0x56, 0x4b, 0x20, 0x77,
 	0x7d, 0x14, 0x7a, 0xdf, 0xfd, 0x06, 0x00, 0x00, 0xff, 0xff, 0xd6, 0x23, 0x27, 0x7a, 0x0d, 0x01,
 	0x00, 0x00,
+}
+
+// Reference imports to suppress errors if they are not otherwise used.
+var _ context.Context
+var _ grpc.ClientConn
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the grpc package it is being compiled against.
+const _ = grpc.SupportPackageIsVersion4
+
+// ExchangeClient is the client API for Exchange service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type ExchangeClient interface {
+	GetPeer(ctx context.Context, in *PeerMessage, opts ...grpc.CallOption) (*PeerResponse, error)
+	GetAnswer(ctx context.Context, in *Offer, opts ...grpc.CallOption) (*Answer, error)
+}
+
+type exchangeClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewExchangeClient(cc *grpc.ClientConn) ExchangeClient {
+	return &exchangeClient{cc}
+}
+
+func (c *exchangeClient) GetPeer(ctx context.Context, in *PeerMessage, opts ...grpc.CallOption) (*PeerResponse, error) {
+	out := new(PeerResponse)
+	err := c.cc.Invoke(ctx, "/Exchange/GetPeer", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *exchangeClient) GetAnswer(ctx context.Context, in *Offer, opts ...grpc.CallOption) (*Answer, error) {
+	out := new(Answer)
+	err := c.cc.Invoke(ctx, "/Exchange/GetAnswer", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// ExchangeServer is the server API for Exchange service.
+type ExchangeServer interface {
+	GetPeer(context.Context, *PeerMessage) (*PeerResponse, error)
+	GetAnswer(context.Context, *Offer) (*Answer, error)
+}
+
+// UnimplementedExchangeServer can be embedded to have forward compatible implementations.
+type UnimplementedExchangeServer struct {
+}
+
+func (*UnimplementedExchangeServer) GetPeer(ctx context.Context, req *PeerMessage) (*PeerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPeer not implemented")
+}
+func (*UnimplementedExchangeServer) GetAnswer(ctx context.Context, req *Offer) (*Answer, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAnswer not implemented")
+}
+
+func RegisterExchangeServer(s *grpc.Server, srv ExchangeServer) {
+	s.RegisterService(&_Exchange_serviceDesc, srv)
+}
+
+func _Exchange_GetPeer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PeerMessage)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServer).GetPeer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Exchange/GetPeer",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServer).GetPeer(ctx, req.(*PeerMessage))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Exchange_GetAnswer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Offer)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServer).GetAnswer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Exchange/GetAnswer",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServer).GetAnswer(ctx, req.(*Offer))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _Exchange_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "Exchange",
+	HandlerType: (*ExchangeServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetPeer",
+			Handler:    _Exchange_GetPeer_Handler,
+		},
+		{
+			MethodName: "GetAnswer",
+			Handler:    _Exchange_GetAnswer_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "sdp_exchange.proto",
 }
