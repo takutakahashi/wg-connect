@@ -18,7 +18,9 @@ func c(err error) {
 }
 
 func (*server) GetPeer(ctx context.Context, in *pb.PeerMessage) (*pb.PeerResponse, error) {
+	fmt.Println(in.Token)
 	out := new(pb.PeerResponse)
+	out.BodyJson = "{}"
 	return out, nil
 }
 

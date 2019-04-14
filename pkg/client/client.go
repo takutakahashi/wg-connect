@@ -1,17 +1,16 @@
 package client
 
 import (
-	"bytes"
-	"encoding/json"
+	"context"
 	"flag"
 	"fmt"
-	"net"
-	"time"
-
 	"github.com/pions/webrtc"
 	"github.com/pions/webrtc/examples/util"
 	"github.com/pions/webrtc/pkg/datachannel"
 	"github.com/pions/webrtc/pkg/ice"
+	pb "github.com/takutakahashi/wg-connect/pkg/proto/sdp_exchange"
+	"google.golang.org/grpc"
+	"time"
 )
 
 type WgSessionDescription struct {
@@ -86,13 +85,18 @@ func ConnectServer() {
 
 // mustSignalViaHTTP exchange the SDP offer and answer using an HTTP Post request.
 func mustSignalViaHTTP(offer webrtc.RTCSessionDescription, address string) webrtc.RTCSessionDescription {
-	b := new(bytes.Buffer)
-	err := json.NewEncoder(b).Encode(WgSessionDescription{Offer: offer, Token: "aaa"})
-	util.Check(err)
-	conn, err := net.Dial("tcp", ":50000")
+	conn, err := grpc.Dial("localhost:50000", grpc.WithInsecure())
+	fmt.Println(conn)
 	util.Check(err)
 	defer conn.Close()
-	conn.Write(b.Bytes())
+	c := pb.NewExchangeClient(conn)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
+	fmt.Println(c)
+	r, err := c.GetPeer(ctx, &pb.PeerMessage{Token: "aaa"})
+	fmt.Println(r)
+	util.Check(err)
+	fmt.Println(r.BodyJson)
 	var answer webrtc.RTCSessionDescription
 	return answer
 }
