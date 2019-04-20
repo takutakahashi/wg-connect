@@ -24,6 +24,92 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+type OfferMessage struct {
+	Token                *Token   `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
+	Body                 string   `protobuf:"bytes,2,opt,name=body,proto3" json:"body,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *OfferMessage) Reset()         { *m = OfferMessage{} }
+func (m *OfferMessage) String() string { return proto.CompactTextString(m) }
+func (*OfferMessage) ProtoMessage()    {}
+func (*OfferMessage) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c88d59dbcf37a6c3, []int{0}
+}
+
+func (m *OfferMessage) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_OfferMessage.Unmarshal(m, b)
+}
+func (m *OfferMessage) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_OfferMessage.Marshal(b, m, deterministic)
+}
+func (m *OfferMessage) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_OfferMessage.Merge(m, src)
+}
+func (m *OfferMessage) XXX_Size() int {
+	return xxx_messageInfo_OfferMessage.Size(m)
+}
+func (m *OfferMessage) XXX_DiscardUnknown() {
+	xxx_messageInfo_OfferMessage.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_OfferMessage proto.InternalMessageInfo
+
+func (m *OfferMessage) GetToken() *Token {
+	if m != nil {
+		return m.Token
+	}
+	return nil
+}
+
+func (m *OfferMessage) GetBody() string {
+	if m != nil {
+		return m.Body
+	}
+	return ""
+}
+
+type OfferResponse struct {
+	Code                 string   `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *OfferResponse) Reset()         { *m = OfferResponse{} }
+func (m *OfferResponse) String() string { return proto.CompactTextString(m) }
+func (*OfferResponse) ProtoMessage()    {}
+func (*OfferResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c88d59dbcf37a6c3, []int{1}
+}
+
+func (m *OfferResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_OfferResponse.Unmarshal(m, b)
+}
+func (m *OfferResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_OfferResponse.Marshal(b, m, deterministic)
+}
+func (m *OfferResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_OfferResponse.Merge(m, src)
+}
+func (m *OfferResponse) XXX_Size() int {
+	return xxx_messageInfo_OfferResponse.Size(m)
+}
+func (m *OfferResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_OfferResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_OfferResponse proto.InternalMessageInfo
+
+func (m *OfferResponse) GetCode() string {
+	if m != nil {
+		return m.Code
+	}
+	return ""
+}
+
 type PeerMessage struct {
 	Token                string   `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -35,7 +121,7 @@ func (m *PeerMessage) Reset()         { *m = PeerMessage{} }
 func (m *PeerMessage) String() string { return proto.CompactTextString(m) }
 func (*PeerMessage) ProtoMessage()    {}
 func (*PeerMessage) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c88d59dbcf37a6c3, []int{0}
+	return fileDescriptor_c88d59dbcf37a6c3, []int{2}
 }
 
 func (m *PeerMessage) XXX_Unmarshal(b []byte) error {
@@ -74,7 +160,7 @@ func (m *PeerResponse) Reset()         { *m = PeerResponse{} }
 func (m *PeerResponse) String() string { return proto.CompactTextString(m) }
 func (*PeerResponse) ProtoMessage()    {}
 func (*PeerResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c88d59dbcf37a6c3, []int{1}
+	return fileDescriptor_c88d59dbcf37a6c3, []int{3}
 }
 
 func (m *PeerResponse) XXX_Unmarshal(b []byte) error {
@@ -113,7 +199,7 @@ func (m *Offer) Reset()         { *m = Offer{} }
 func (m *Offer) String() string { return proto.CompactTextString(m) }
 func (*Offer) ProtoMessage()    {}
 func (*Offer) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c88d59dbcf37a6c3, []int{2}
+	return fileDescriptor_c88d59dbcf37a6c3, []int{4}
 }
 
 func (m *Offer) XXX_Unmarshal(b []byte) error {
@@ -152,7 +238,7 @@ func (m *Answer) Reset()         { *m = Answer{} }
 func (m *Answer) String() string { return proto.CompactTextString(m) }
 func (*Answer) ProtoMessage()    {}
 func (*Answer) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c88d59dbcf37a6c3, []int{3}
+	return fileDescriptor_c88d59dbcf37a6c3, []int{5}
 }
 
 func (m *Answer) XXX_Unmarshal(b []byte) error {
@@ -191,7 +277,7 @@ func (m *Token) Reset()         { *m = Token{} }
 func (m *Token) String() string { return proto.CompactTextString(m) }
 func (*Token) ProtoMessage()    {}
 func (*Token) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c88d59dbcf37a6c3, []int{4}
+	return fileDescriptor_c88d59dbcf37a6c3, []int{6}
 }
 
 func (m *Token) XXX_Unmarshal(b []byte) error {
@@ -220,6 +306,8 @@ func (m *Token) GetBody() string {
 }
 
 func init() {
+	proto.RegisterType((*OfferMessage)(nil), "OfferMessage")
+	proto.RegisterType((*OfferResponse)(nil), "OfferResponse")
 	proto.RegisterType((*PeerMessage)(nil), "PeerMessage")
 	proto.RegisterType((*PeerResponse)(nil), "PeerResponse")
 	proto.RegisterType((*Offer)(nil), "Offer")
@@ -230,21 +318,25 @@ func init() {
 func init() { proto.RegisterFile("sdp_exchange.proto", fileDescriptor_c88d59dbcf37a6c3) }
 
 var fileDescriptor_c88d59dbcf37a6c3 = []byte{
-	// 218 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x90, 0x41, 0x4b, 0xc4, 0x30,
-	0x10, 0x85, 0xbb, 0x60, 0xb3, 0xed, 0xb8, 0x5e, 0x06, 0x0f, 0xd2, 0x16, 0x91, 0x78, 0x29, 0x08,
-	0x39, 0xe8, 0x2f, 0xf0, 0x20, 0x05, 0x41, 0x94, 0xe2, 0xbd, 0xb4, 0x76, 0x5a, 0x51, 0x48, 0x4a,
-	0x26, 0xa0, 0xfe, 0x7b, 0x49, 0x1a, 0xa1, 0x07, 0xf7, 0x96, 0xbc, 0xf7, 0xc1, 0xfb, 0x18, 0x40,
-	0x1e, 0x97, 0x8e, 0xbe, 0xdf, 0xde, 0x7b, 0x3d, 0x93, 0x5a, 0xac, 0x71, 0x46, 0x5e, 0xc3, 0xe9,
-	0x0b, 0x91, 0x7d, 0x22, 0xe6, 0x7e, 0x26, 0x3c, 0x87, 0xd4, 0x99, 0x4f, 0xd2, 0x17, 0xbb, 0xab,
-	0x5d, 0x9d, 0xb7, 0xeb, 0x47, 0xde, 0xc0, 0xc1, 0x43, 0x2d, 0xf1, 0x62, 0x34, 0x13, 0x96, 0x90,
-	0x0f, 0x66, 0xfc, 0xe9, 0x3e, 0xd8, 0xfc, 0x91, 0x99, 0x0f, 0x1e, 0xd9, 0x68, 0x59, 0x42, 0xfa,
-	0x3c, 0x4d, 0x64, 0x11, 0xe1, 0xc4, 0x87, 0x11, 0x08, 0x6f, 0x59, 0x81, 0xb8, 0xd7, 0xfc, 0x75,
-	0xa4, 0x2d, 0x21, 0x7d, 0xf5, 0x83, 0xff, 0x95, 0xb7, 0x16, 0xb2, 0x87, 0xe8, 0x8e, 0x35, 0xec,
-	0x1b, 0x72, 0xde, 0x09, 0x0f, 0x6a, 0xe3, 0x5f, 0x9c, 0xa9, 0xad, 0xa8, 0x4c, 0xf0, 0x12, 0xf2,
-	0x86, 0x5c, 0xdc, 0x14, 0x2a, 0x98, 0x15, 0x7b, 0xb5, 0x06, 0x32, 0xc1, 0x0a, 0xb2, 0x86, 0xdc,
-	0x2a, 0x2c, 0x54, 0x58, 0x2f, 0x22, 0x26, 0x93, 0x41, 0x84, 0x23, 0xdd, 0xfd, 0x06, 0x00, 0x00,
-	0xff, 0xff, 0xef, 0x2f, 0x90, 0xce, 0x3a, 0x01, 0x00, 0x00,
+	// 281 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x91, 0x41, 0x4b, 0xc3, 0x30,
+	0x14, 0xc7, 0x1b, 0xb1, 0x5d, 0xf3, 0xd6, 0x7a, 0x08, 0x1e, 0x46, 0x5b, 0x64, 0x64, 0x97, 0x82,
+	0x92, 0xc3, 0xfc, 0x02, 0x7a, 0x90, 0x82, 0x20, 0x4a, 0xdd, 0x7d, 0x6c, 0xeb, 0xdb, 0x44, 0x21,
+	0x29, 0x4b, 0x40, 0xfd, 0x36, 0x7e, 0x54, 0x49, 0x1a, 0x67, 0x76, 0xd8, 0x2d, 0x79, 0xef, 0xcf,
+	0xff, 0xff, 0x7b, 0xef, 0x01, 0xd3, 0x5d, 0xbf, 0xc4, 0xaf, 0xcd, 0xdb, 0x4a, 0xee, 0x50, 0xf4,
+	0x7b, 0x65, 0x14, 0xbf, 0x83, 0xec, 0x79, 0xbb, 0xc5, 0xfd, 0x13, 0x6a, 0xbd, 0xda, 0x21, 0xab,
+	0x20, 0x36, 0xea, 0x03, 0xe5, 0x84, 0x4c, 0x49, 0x3d, 0x9e, 0x27, 0x62, 0x61, 0x7f, 0xed, 0x50,
+	0x64, 0x0c, 0xce, 0xd7, 0xaa, 0xfb, 0x9e, 0x9c, 0x4d, 0x49, 0x4d, 0x5b, 0xf7, 0xe6, 0x33, 0xc8,
+	0x9d, 0x43, 0x8b, 0xba, 0x57, 0x52, 0xa3, 0x15, 0x6d, 0x54, 0x87, 0xce, 0x81, 0xb6, 0xee, 0xcd,
+	0x67, 0x30, 0x7e, 0xc1, 0xff, 0x94, 0xcb, 0x30, 0x85, 0x7a, 0x77, 0x7e, 0x0d, 0x99, 0x15, 0x1d,
+	0x8c, 0x4a, 0xa0, 0x36, 0x61, 0xf9, 0xae, 0xd5, 0x9f, 0x32, 0xb5, 0x85, 0x47, 0xad, 0x24, 0x2f,
+	0x21, 0x76, 0xb1, 0x07, 0x26, 0x12, 0x30, 0x55, 0x90, 0xdc, 0x4b, 0xfd, 0x79, 0xa2, 0x5b, 0x42,
+	0xbc, 0x38, 0x1a, 0x27, 0x68, 0xce, 0x7f, 0x08, 0xa4, 0x0f, 0x7e, 0x47, 0xac, 0x86, 0x51, 0x83,
+	0xc6, 0x42, 0xb1, 0x4c, 0x04, 0x03, 0x14, 0xb9, 0x08, 0x49, 0x79, 0xc4, 0xae, 0x80, 0x36, 0x68,
+	0x7c, 0x68, 0x22, 0x1c, 0x5a, 0x31, 0x12, 0x43, 0x81, 0x47, 0xac, 0x82, 0xb4, 0x41, 0x33, 0x10,
+	0xfb, 0xa5, 0x16, 0x5e, 0xc6, 0x23, 0x76, 0x03, 0xf4, 0x15, 0x65, 0x37, 0xb4, 0x73, 0x11, 0x5e,
+	0xa4, 0xb8, 0x10, 0x47, 0xeb, 0xe5, 0xd1, 0x3a, 0x71, 0xa7, 0xbb, 0xfd, 0x0d, 0x00, 0x00, 0xff,
+	0xff, 0xc5, 0xab, 0xed, 0xfa, 0xd0, 0x01, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -262,6 +354,7 @@ type ExchangeClient interface {
 	GetPeer(ctx context.Context, in *PeerMessage, opts ...grpc.CallOption) (*PeerResponse, error)
 	GetAnswer(ctx context.Context, in *Offer, opts ...grpc.CallOption) (*Answer, error)
 	GetOffer(ctx context.Context, in *Token, opts ...grpc.CallOption) (*Offer, error)
+	SendOffer(ctx context.Context, in *OfferMessage, opts ...grpc.CallOption) (*OfferResponse, error)
 }
 
 type exchangeClient struct {
@@ -299,11 +392,21 @@ func (c *exchangeClient) GetOffer(ctx context.Context, in *Token, opts ...grpc.C
 	return out, nil
 }
 
+func (c *exchangeClient) SendOffer(ctx context.Context, in *OfferMessage, opts ...grpc.CallOption) (*OfferResponse, error) {
+	out := new(OfferResponse)
+	err := c.cc.Invoke(ctx, "/Exchange/SendOffer", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ExchangeServer is the server API for Exchange service.
 type ExchangeServer interface {
 	GetPeer(context.Context, *PeerMessage) (*PeerResponse, error)
 	GetAnswer(context.Context, *Offer) (*Answer, error)
 	GetOffer(context.Context, *Token) (*Offer, error)
+	SendOffer(context.Context, *OfferMessage) (*OfferResponse, error)
 }
 
 // UnimplementedExchangeServer can be embedded to have forward compatible implementations.
@@ -318,6 +421,9 @@ func (*UnimplementedExchangeServer) GetAnswer(ctx context.Context, req *Offer) (
 }
 func (*UnimplementedExchangeServer) GetOffer(ctx context.Context, req *Token) (*Offer, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOffer not implemented")
+}
+func (*UnimplementedExchangeServer) SendOffer(ctx context.Context, req *OfferMessage) (*OfferResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendOffer not implemented")
 }
 
 func RegisterExchangeServer(s *grpc.Server, srv ExchangeServer) {
@@ -378,6 +484,24 @@ func _Exchange_GetOffer_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Exchange_SendOffer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OfferMessage)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExchangeServer).SendOffer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Exchange/SendOffer",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExchangeServer).SendOffer(ctx, req.(*OfferMessage))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Exchange_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "Exchange",
 	HandlerType: (*ExchangeServer)(nil),
@@ -393,6 +517,10 @@ var _Exchange_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetOffer",
 			Handler:    _Exchange_GetOffer_Handler,
+		},
+		{
+			MethodName: "SendOffer",
+			Handler:    _Exchange_SendOffer_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
