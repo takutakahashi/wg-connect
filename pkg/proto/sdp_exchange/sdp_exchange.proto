@@ -3,6 +3,7 @@ syntax = "proto3";
 service Exchange {
   rpc GetPeer (PeerMessage) returns (PeerResponse) {}
   rpc GetAnswer (Offer) returns (Answer) {}
+  rpc GetOffer (Token) returns (Offer) {}
 }
 
 message PeerMessage {
@@ -10,13 +11,17 @@ message PeerMessage {
 }
 
 message PeerResponse {
-  string body_json = 2;
+  string body_json = 1;
 }
 
 message Offer {
-  string sdp_body = 3;
+  string body = 1;
 }
 
 message Answer {
-  string sdp_body = 4;
+  string body = 1;
+}
+
+message Token {
+  string body = 1;
 }
