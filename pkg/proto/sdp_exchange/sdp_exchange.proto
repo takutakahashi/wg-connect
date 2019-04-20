@@ -4,11 +4,16 @@ service Exchange {
   rpc GetPeer (PeerMessage) returns (PeerResponse) {}
   rpc GetAnswer (Offer) returns (Answer) {}
   rpc GetOffer (Token) returns (Offer) {}
+  rpc SendOffer (OfferMessage) returns (OfferResponse) {}
 }
 
 message OfferMessage {
   Token token = 1;
   string body = 2;
+}
+
+message OfferResponse {
+  string code = 1;
 }
 
 message PeerMessage {
