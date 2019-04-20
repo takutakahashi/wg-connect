@@ -6,6 +6,11 @@ service Exchange {
   rpc GetOffer (Token) returns (Offer) {}
 }
 
+message OfferMessage {
+  Token token = 1;
+  string body = 2;
+}
+
 message PeerMessage {
   string token = 1;
 }
