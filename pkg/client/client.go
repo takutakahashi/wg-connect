@@ -28,21 +28,46 @@ func ConnectServer() {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 	o, err := c.GetOffer(ctx, token)
+	offer := webrtc.RTCSessionDescription{}
 	if err != nil {
 		// offer がない
-		fmt.Println(err)
-		r, err := c.GetPeer(ctx, &pb.PeerMessage{Token: "takutaka"})
-		offer, err := peerConnection.CreateOffer(nil)
-		c.SendOffer(ctx, &pb.OfferMessage{Token: token, Body: offer.Sdp})
+		offer, err = peerConnection.CreateOffer(nil)
+		c.SendOffer(ctx, &pb.OfferMessage{Token: token, Body: &pb.Offer{Body: offer.Sdp}})
 		util.Check(err)
-		fmt.Println(r)
+		fmt.Println(offer)
+		// wait answer
+		fmt.Println("waiting answer.")
+		for {
+			a, err := c.GetAnswer(ctx, token)
+			if err != nil {
+				time.Sleep(1 * time.Second)
+				fmt.Print(".")
+			} else {
+				answer := webrtc.RTCSessionDescription{
+					Type: webrtc.RTCSdpTypeAnswer,
+					Sdp:  a.Body,
+				}
+				fmt.Println(answer)
+				fmt.Println("answer was found")
+				break
+			}
+		}
 	} else {
 		// offer があった
-		offer := webrtc.RTCSessionDescription{
+		offer = webrtc.RTCSessionDescription{
 			Type: webrtc.RTCSdpTypeOffer,
 			Sdp:  o.Body,
 		}
 		fmt.Println(offer)
-		fmt.Println("offer found")
+		// send answer
+		answer, err := peerConnection.CreateOffer(nil)
+		_, err = c.SendAnswer(ctx, &pb.AnswerMessage{Token: token, Body: &pb.Answer{Body: answer.Sdp}})
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println("-----------offer---------")
+		fmt.Println(offer)
+		fmt.Println("-----------answer---------")
+		fmt.Println(answer)
 	}
 }

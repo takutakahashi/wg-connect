@@ -14,6 +14,7 @@ type server struct {
 	ch             chan string
 	description    chan webrtc.RTCSessionDescription
 	offerPool      map[string]webrtc.RTCSessionDescription
+	answerPool     map[string]webrtc.RTCSessionDescription
 	peerConnection *webrtc.RTCPeerConnection
 }
 
@@ -34,13 +35,35 @@ func (s *server) GetOffer(ctx context.Context, in *pb.Token) (*pb.Offer, error) 
 	}
 }
 
+func (s *server) GetAnswer(ctx context.Context, in *pb.Token) (*pb.Answer, error) {
+	_, ok := s.offerPool[in.Body]
+	if !ok {
+		return nil, errors.New("offer required before getting answer")
+	}
+
+	answer, ok := s.answerPool[in.Body]
+	if !ok {
+		return nil, errors.New("answer is not found")
+	}
+	return &pb.Answer{Body: answer.Sdp}, nil
+}
+
 func (s *server) SendOffer(ctx context.Context, in *pb.OfferMessage) (*pb.OfferResponse, error) {
 	s.offerPool[in.Token.Body] = webrtc.RTCSessionDescription{
 		Type: webrtc.RTCSdpTypeOffer,
-		Sdp:  in.Body,
+		Sdp:  in.Body.Body,
 	}
 	fmt.Println(s.offerPool)
 	return &pb.OfferResponse{Code: "ok"}, nil
+}
+
+func (s *server) SendAnswer(ctx context.Context, in *pb.AnswerMessage) (*pb.AnswerResponse, error) {
+	s.answerPool[in.Token.Body] = webrtc.RTCSessionDescription{
+		Type: webrtc.RTCSdpTypeOffer,
+		Sdp:  in.Body.Body,
+	}
+	fmt.Println(s.answerPool)
+	return &pb.AnswerResponse{Code: "ok"}, nil
 }
 
 func (s *server) GetPeer(ctx context.Context, in *pb.PeerMessage) (*pb.PeerResponse, error) {
@@ -49,11 +72,6 @@ func (s *server) GetPeer(ctx context.Context, in *pb.PeerMessage) (*pb.PeerRespo
 
 	s.ch <- in.Token
 
-	return out, nil
-}
-
-func (*server) GetAnswer(ctx context.Context, in *pb.Offer) (*pb.Answer, error) {
-	out := new(pb.Answer)
 	return out, nil
 }
 
@@ -76,6 +94,7 @@ func StartServer() {
 		ch:             make(chan string),
 		description:    make(chan webrtc.RTCSessionDescription),
 		offerPool:      map[string]webrtc.RTCSessionDescription{},
+		answerPool:     map[string]webrtc.RTCSessionDescription{},
 		peerConnection: peerConnection,
 	}
 	pb.RegisterExchangeServer(s, serve)
