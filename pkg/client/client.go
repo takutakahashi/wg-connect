@@ -25,7 +25,7 @@ func ConnectServer() {
 	util.Check(err)
 	defer conn.Close()
 	c := pb.NewExchangeClient(conn)
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 	o, err := c.GetOffer(ctx, token)
 	offer := webrtc.RTCSessionDescription{}
@@ -40,6 +40,7 @@ func ConnectServer() {
 		for {
 			a, err := c.GetAnswer(ctx, token)
 			if err != nil {
+				fmt.Println(err)
 				time.Sleep(1 * time.Second)
 				fmt.Print(".")
 			} else {
@@ -60,7 +61,11 @@ func ConnectServer() {
 		}
 		fmt.Println(offer)
 		// send answer
-		answer, err := peerConnection.CreateOffer(nil)
+		err = peerConnection.SetRemoteDescription(offer)
+		if err != nil {
+			panic(err)
+		}
+		answer, err := peerConnection.CreateAnswer(nil)
 		_, err = c.SendAnswer(ctx, &pb.AnswerMessage{Token: token, Body: &pb.Answer{Body: answer.Sdp}})
 		if err != nil {
 			panic(err)
