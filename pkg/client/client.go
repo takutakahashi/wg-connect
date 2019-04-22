@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/pions/webrtc"
 	"github.com/pions/webrtc/examples/util"
+	"github.com/pions/webrtc/pkg/ice"
 	pb "github.com/takutakahashi/wg-connect/pkg/proto/sdp_exchange"
 	"google.golang.org/grpc"
 	"time"
@@ -19,6 +20,9 @@ func ConnectServer() {
 		},
 	}
 	peerConnection, err := webrtc.New(config)
+	peerConnection.OnICEConnectionStateChange(func(connectionState ice.ConnectionState) {
+		fmt.Printf("ICE Connection State has changed: %s\n", connectionState.String())
+	})
 	util.Check(err)
 	token := &pb.Token{Body: "takutaka"}
 	conn, err := grpc.Dial("localhost:50000", grpc.WithInsecure())
@@ -49,8 +53,12 @@ func ConnectServer() {
 					Sdp:  a.Body,
 				}
 				fmt.Println(answer)
+				err = peerConnection.SetRemoteDescription(answer)
+				if err != nil {
+					panic(err)
+				}
 				fmt.Println("answer was found")
-				break
+				select {}
 			}
 		}
 	} else {
@@ -74,5 +82,6 @@ func ConnectServer() {
 		fmt.Println(offer)
 		fmt.Println("-----------answer---------")
 		fmt.Println(answer)
+		select {}
 	}
 }
