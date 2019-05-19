@@ -279,6 +279,8 @@ func (a *Agent) pingCandidate(local, remote *Candidate) {
 }
 
 func (a *Agent) updateConnectionState(newState ConnectionState) {
+	fmt.Println("updateConnectionState")
+	fmt.Println(newState)
 	if a.connectionState != newState {
 		a.connectionState = newState
 		if a.notifier != nil {
@@ -291,6 +293,7 @@ func (a *Agent) updateConnectionState(newState ConnectionState) {
 
 func (a *Agent) setValidPair(local, remote *Candidate, selected bool) {
 	// TODO: avoid duplicates
+	fmt.Println("setValidPair")
 	p := newCandidatePair(local, remote)
 
 	if selected {
@@ -313,6 +316,8 @@ func (a *Agent) setValidPair(local, remote *Candidate, selected bool) {
 type task func(*Agent)
 
 func (a *Agent) run(t task) error {
+	fmt.Println("run")
+	fmt.Println(a.validPairs)
 	err := a.ok()
 	if err != nil {
 		return err
@@ -379,6 +384,7 @@ func (a *Agent) checkKeepalive() {
 // pingAllCandidates sends STUN Binding Requests to all candidates
 // Note: the caller should hold the agent lock.
 func (a *Agent) pingAllCandidates() {
+	fmt.Println("pingAllCandidates")
 	for networkType, localCandidates := range a.localCandidates {
 		if remoteCandidates, ok := a.remoteCandidates[networkType]; ok {
 
@@ -394,6 +400,7 @@ func (a *Agent) pingAllCandidates() {
 
 // AddRemoteCandidate adds a new remote candidate
 func (a *Agent) AddRemoteCandidate(c *Candidate) error {
+	fmt.Println("AddRemoteCandidate")
 	return a.run(func(agent *Agent) {
 		networkType := c.NetworkType
 		set := agent.remoteCandidates[networkType]
@@ -472,6 +479,7 @@ func (a *Agent) Close() error {
 }
 
 func (a *Agent) findRemoteCandidate(networkType NetworkType, addr net.Addr) *Candidate {
+	fmt.Println("findRemoteCandidate")
 	var ip net.IP
 	var port int
 
@@ -499,6 +507,7 @@ func (a *Agent) findRemoteCandidate(networkType NetworkType, addr net.Addr) *Can
 }
 
 func (a *Agent) sendBindingSuccess(m *stun.Message, local, remote *Candidate) {
+	fmt.Println("sendBindingSuccess")
 	base := remote
 	if out, err := stun.Build(stun.ClassSuccessResponse, stun.MethodBinding, m.TransactionID,
 		&stun.XorMappedAddress{
