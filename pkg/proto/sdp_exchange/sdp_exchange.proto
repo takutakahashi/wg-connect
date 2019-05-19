@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+service Exchange {
+  rpc GetPeer (PeerMessage) returns (PeerResponse) {}
+  rpc GetAnswer (Token) returns (Answer) {}
+  rpc GetOffer (Token) returns (Offer) {}
+  rpc SendOffer (OfferMessage) returns (OfferResponse) {}
+  rpc SendAnswer (AnswerMessage) returns (AnswerResponse) {}
+}
+
+message OfferMessage {
+  Token token = 1;
+  Offer  body = 2;
+}
+
+message AnswerMessage {
+  Token token = 1;
+  Answer  body = 2;
+}
+
+message OfferResponse {
+  string code = 1;
+}
+
+message AnswerResponse {
+  string code = 1;
+}
+
+message PeerMessage {
+  string token = 1;
+}
+
+message PeerResponse {
+  string body_json = 1;
+}
+
+message Offer {
+  string body = 1;
+}
+
+message Answer {
+  string body = 1;
+}
+
+message Token {
+  string body = 1;
+}
